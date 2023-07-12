@@ -1,3 +1,4 @@
+import { createAction } from "@reduxjs/toolkit";
 // The below pattern implemented using Ducks patteren. Points to remember in Ducks pattern
 // 1) Move Action types, Action creators and Reducer into this single module.
 // 1) Reducer has to be default export in this module.
@@ -8,26 +9,11 @@ const BUG_REMOVED = "bugRemoved";
 const BUG_RESOLVED = "bugResolved";
 
 // Action creators
-export const bugAdded = (description) => ({
-  type: BUG_ADDED,
-  payload: {
-    description: description,
-  },
-});
+export const bugAdded = createAction(BUG_ADDED);
 
-export const bugRemoved = (id) => ({
-  type: BUG_REMOVED,
-  payload: {
-    id: id,
-  },
-});
+export const bugRemoved = createAction(BUG_REMOVED);
 
-export const bugResloved = (id) => ({
-  type: BUG_RESOLVED,
-  payload: {
-    id: id,
-  },
-});
+export const bugResloved = createAction(BUG_RESOLVED);
 
 // Reducer
 

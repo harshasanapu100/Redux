@@ -7,15 +7,15 @@ const unsubscribe = store.subscribe(() => {
   console.log("Store changed", store.getState());
 });
 
-store.dispatch(actionCreators.bugAdded("Bug1"));
+store.dispatch(actionCreators.bugAdded({ description: "Bug1" }));
 
-store.dispatch(actionCreators.bugAdded("Bug2"));
+store.dispatch(actionCreators.bugAdded({ description: "Bug2" }));
 
-store.dispatch(actionCreators.bugAdded("Bug3"));
+store.dispatch(actionCreators.bugAdded({ description: "Bug3" }));
 
-store.dispatch(actionCreators.bugResloved(1));
+store.dispatch(actionCreators.bugResloved({ id: 1 }));
 
-store.dispatch(actionCreators.bugRemoved(1));
+store.dispatch(actionCreators.bugRemoved({ id: 1 }));
 
 console.log(store.getState());
 
