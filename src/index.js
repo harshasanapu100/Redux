@@ -1,5 +1,7 @@
-import store from "./store";
-import * as actionCreators from "./actionCreators";
+import configureStore from "./store/configureStore";
+import * as actionCreators from "./store/bugs";
+
+const store = configureStore();
 
 const unsubscribe = store.subscribe(() => {
   console.log("Store changed", store.getState());
