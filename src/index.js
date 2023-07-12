@@ -11,8 +11,6 @@ store.dispatch({
   },
 });
 
-unsubscribe();
-
 store.dispatch({
   type: "bugRemoved",
   payload: {
@@ -21,3 +19,5 @@ store.dispatch({
 });
 
 console.log(store.getState());
+
+unsubscribe();
