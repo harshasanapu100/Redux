@@ -5,6 +5,8 @@ import { createSlice } from "@reduxjs/toolkit";
 
 let lastId = 0;
 
+// crateSlice combines the createAction & createReducer and automatically creates
+// actions and reducer for us
 const slice = createSlice({
   name: "bugs",
   initialState: [],
