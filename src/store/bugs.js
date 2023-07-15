@@ -23,20 +23,20 @@ const slice = createSlice({
       });
     },
 
-    bugRemoved: (state, action) => {
-      const index = state.findIndex((bug) => bug.id == action.payload.id);
-      state.splice(index, 1);
+    bugRemoved: (bugs, action) => {
+      const index = bugs.findIndex((bug) => bug.id == action.payload.id);
+      bugs.splice(index, 1);
     },
 
-    bugResloved: (state, action) => {
-      const index = state.findIndex((bug) => bug.id == action.payload.id);
-      state[index].resolved = true;
+    bugResloved: (bugs, action) => {
+      const index = bugs.findIndex((bug) => bug.id == action.payload.id);
+      bugs[index].resolved = true;
     },
 
-    bugAssignedToUser: (state, action) => {
+    bugAssignedToUser: (bugs, action) => {
       const { bugId, userId } = action.payload;
-      const index = state.findIndex((bug) => bug.id === bugId);
-      state[index].userId = userId;
+      const index = bugs.findIndex((bug) => bug.id === bugId);
+      bugs[index].userId = userId;
     },
   },
 });

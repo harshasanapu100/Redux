@@ -1,13 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { create } from "lodash";
 
 var lastId = 0;
 const slice = createSlice({
   name: "users",
   initialState: [],
   reducers: {
-    userAdded: (state, action) => {
-      state.push({ id: ++lastId, name: action.payload.name });
+    userAdded: (users, action) => {
+      users.push({ id: ++lastId, name: action.payload.name });
     },
   },
 });
