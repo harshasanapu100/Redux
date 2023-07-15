@@ -4,6 +4,7 @@ import {
   bugRemoved,
   bugResloved,
   getUnresolvedBugs,
+  getUnresolvedBugsUsingMemoization,
 } from "./store/bugs";
 import { projectAdded } from "./store/projects";
 
@@ -25,7 +26,16 @@ store.dispatch(bugRemoved({ id: 1 }));
 
 console.log(store.getState());
 
-const unresolvedBugs = getUnresolvedBugs(store.getState());
-console.log(unresolvedBugs);
+const unresolvedBugs1 = getUnresolvedBugs(store.getState());
+const unresolvedBugs2 = getUnresolvedBugs(store.getState());
+console.log(unresolvedBugs1 == unresolvedBugs2); // false
+
+const unresolvedBugsMemoization1 = getUnresolvedBugsUsingMemoization(
+  store.getState()
+);
+const unresolvedBugsMemoization2 = getUnresolvedBugsUsingMemoization(
+  store.getState()
+);
+console.log(unresolvedBugsMemoization1 == unresolvedBugsMemoization2); // true
 
 unsubscribe();
