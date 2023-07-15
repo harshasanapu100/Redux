@@ -3,16 +3,23 @@ import {
   bugAdded,
   bugRemoved,
   bugResloved,
+  bugAssignedToUser,
   getUnresolvedBugs,
   getUnresolvedBugsUsingMemoization,
+  getBugsByUser,
 } from "./store/bugs";
 import { projectAdded } from "./store/projects";
+import { userAdded } from "./store/users";
 
 const store = configureStore();
 
 const unsubscribe = store.subscribe(() => {
   console.log("Store changed", store.getState());
 });
+
+// User dispatchers
+store.dispatch(userAdded({ name: "User1" }));
+store.dispatch(userAdded({ name: "User2" }));
 
 // Projects dispatchers
 store.dispatch(projectAdded({ name: "Project 1" }));
@@ -23,6 +30,7 @@ store.dispatch(bugAdded({ description: "Bug2" }));
 store.dispatch(bugAdded({ description: "Bug3" }));
 store.dispatch(bugResloved({ id: 1 }));
 store.dispatch(bugRemoved({ id: 1 }));
+store.dispatch(bugAssignedToUser({ bugId: 2, userId: 1 }));
 
 console.log(store.getState());
 
@@ -37,5 +45,8 @@ const unresolvedBugsMemoization2 = getUnresolvedBugsUsingMemoization(
   store.getState()
 );
 console.log(unresolvedBugsMemoization1 == unresolvedBugsMemoization2); // true
+
+const bugs = getBugsByUser(2)(store.getState());
+console.log(bugs);
 
 unsubscribe();

@@ -32,10 +32,17 @@ const slice = createSlice({
       const index = state.findIndex((bug) => bug.id == action.payload.id);
       state[index].resolved = true;
     },
+
+    bugAssignedToUser: (state, action) => {
+      const { bugId, userId } = action.payload;
+      const index = state.findIndex((bug) => bug.id === bugId);
+      state[index].userId = userId;
+    },
   },
 });
 
-export const { bugAdded, bugRemoved, bugResloved } = slice.actions;
+export const { bugAdded, bugRemoved, bugResloved, bugAssignedToUser } =
+  slice.actions;
 export default slice.reducer;
 
 // Selector - A selector is a function which takes the state and return computed state
@@ -44,10 +51,16 @@ export const getUnresolvedBugs = (state) =>
 
 // Memoization - Memoization is a techinque for optimizing expensive function
 export const getUnresolvedBugsUsingMemoization = createSelector(
-  // The output of the state function which is list of bugs get passed to result to next fucntion
+  // The output of the state function which is list of bugs get passed to result to next fucntion(bugs)
   (state) => state.entities.bugs,
 
   // This function calls first time and store results in cache, scond time onwards if the list of bugs
   // is not changed the logic will not be executed again
   (bugs) => bugs.filter((bug) => !bug.resolved)
 );
+
+export const getBugsByUser = (userId) =>
+  createSelector(
+    (state) => state.entities.bugs,
+    (bugs) => bugs.filter((bug) => bug.userId === userId)
+  );
