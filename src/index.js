@@ -34,6 +34,7 @@ store.dispatch(bugAssignedToUser({ bugId: 2, userId: 1 }));
 
 console.log(store.getState());
 
+// Selectors
 const unresolvedBugs1 = getUnresolvedBugs(store.getState());
 const unresolvedBugs2 = getUnresolvedBugs(store.getState());
 console.log(unresolvedBugs1 == unresolvedBugs2); // false
