@@ -38,12 +38,16 @@ store.dispatch((dispatch, getState) => {
 
   // When the promise is resolved => dispatch(res of api call)
   dispatch({ type: "bugsReceived", paylod: { bugs: [1, 2, 3] } });
-  console.log(getState());
 
   // If the promise is rejected => dispatch(error)
 });
 
-console.log(store.getState());
+store.dispatch({
+  type: "error",
+  payload: {
+    message: "An error occurred",
+  },
+});
 
 // Selectors
 const unresolvedBugs1 = getUnresolvedBugs(store.getState());
