@@ -32,6 +32,22 @@ store.dispatch(bugResloved({ id: 1 }));
 store.dispatch(bugRemoved({ id: 1 }));
 store.dispatch(bugAssignedToUser({ bugId: 2, userId: 1 }));
 
+// Selectors
+const unresolvedBugs1 = getUnresolvedBugs(store.getState());
+const unresolvedBugs2 = getUnresolvedBugs(store.getState());
+console.log(unresolvedBugs1 == unresolvedBugs2); // false
+
+const unresolvedBugsMemoization1 = getUnresolvedBugsUsingMemoization(
+  store.getState()
+);
+const unresolvedBugsMemoization2 = getUnresolvedBugsUsingMemoization(
+  store.getState()
+);
+console.log(unresolvedBugsMemoization1 == unresolvedBugsMemoization2); // true
+
+const bugs = getBugsByUser(2)(store.getState());
+console.log(bugs);
+
 // Passing function as parameter to dispatch method
 store.dispatch((dispatch, getState) => {
   // Call  an API endpoint
@@ -49,20 +65,15 @@ store.dispatch({
   },
 });
 
-// Selectors
-const unresolvedBugs1 = getUnresolvedBugs(store.getState());
-const unresolvedBugs2 = getUnresolvedBugs(store.getState());
-console.log(unresolvedBugs1 == unresolvedBugs2); // false
+// Calling backend API
 
-const unresolvedBugsMemoization1 = getUnresolvedBugsUsingMemoization(
-  store.getState()
-);
-const unresolvedBugsMemoization2 = getUnresolvedBugsUsingMemoization(
-  store.getState()
-);
-console.log(unresolvedBugsMemoization1 == unresolvedBugsMemoization2); // true
-
-const bugs = getBugsByUser(2)(store.getState());
-console.log(bugs);
+store.dispatch({
+  type: "apiCallBegan",
+  payload: {
+    url: "/bugs",
+    onSuccess: "bugsReceived",
+    onError: "apiRequestFailed",
+  },
+});
 
 unsubscribe();
