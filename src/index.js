@@ -17,7 +17,7 @@ const unsubscribe = store.subscribe(() => {
   console.log("Store changed", store.getState());
 });
 
-// User dispatchers
+// Users dispatchers
 store.dispatch(userAdded({ name: "User1" }));
 store.dispatch(userAdded({ name: "User2" }));
 
@@ -31,6 +31,17 @@ store.dispatch(bugAdded({ description: "Bug3" }));
 store.dispatch(bugResloved({ id: 1 }));
 store.dispatch(bugRemoved({ id: 1 }));
 store.dispatch(bugAssignedToUser({ bugId: 2, userId: 1 }));
+
+// Passing function as parameter to dispatch method
+store.dispatch((dispatch, getState) => {
+  // Call  an API endpoint
+
+  // When the promise is resolved => dispatch(res of api call)
+  dispatch({ type: "bugsReceived", paylod: { bugs: [1, 2, 3] } });
+  console.log(getState());
+
+  // If the promise is rejected => dispatch(error)
+});
 
 console.log(store.getState());
 
