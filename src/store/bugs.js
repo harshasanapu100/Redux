@@ -51,12 +51,12 @@ export default slice.reducer;
 
 // Selector - A selector is a function which takes the state and return computed state
 export const getUnresolvedBugs = (state) =>
-  state.entities.bugs.filter((bug) => !bug.resolved);
+  state.entities.bugs.list.filter((bug) => !bug.resolved);
 
 // Memoization - Memoization is a techinque for optimizing expensive function
 export const getUnresolvedBugsUsingMemoization = createSelector(
   // The output of the state function which is list of bugs get passed to result to next fucntion(bugs)
-  (state) => state.entities.bugs,
+  (state) => state.entities.bugs.list,
 
   // This function calls first time and store results in cache, scond time onwards if the list of bugs
   // is not changed the logic will not be executed again
@@ -65,6 +65,6 @@ export const getUnresolvedBugsUsingMemoization = createSelector(
 
 export const getBugsByUser = (userId) =>
   createSelector(
-    (state) => state.entities.bugs,
+    (state) => state.entities.bugs.list,
     (bugs) => bugs.filter((bug) => bug.userId === userId)
   );
