@@ -10,6 +10,7 @@ import {
 } from "./store/bugs";
 import { projectAdded } from "./store/projects";
 import { userAdded } from "./store/users";
+import { apiCallBegan, apiCallFailed, apiCallSuccess } from "./store/api";
 
 const store = configureStore();
 
@@ -67,13 +68,12 @@ store.dispatch({
 
 // Calling backend API
 
-store.dispatch({
-  type: "apiCallBegan",
-  payload: {
+store.dispatch(
+  apiCallBegan({
     url: "/bugs",
     onSuccess: "bugsReceived",
-    onError: "apiRequestFailed",
-  },
-});
+    onError: apiCallFailed.type,
+  })
+);
 
 unsubscribe();
