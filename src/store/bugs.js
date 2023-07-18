@@ -93,6 +93,14 @@ export const addBug = (bug) =>
     onSuccess: bugAdded.type,
   });
 
+export const resolveBug = (id) =>
+  apiCallBegan({
+    url: url + "/" + id,
+    method: "patch",
+    data: { resolved: true },
+    onSuccess: bugResloved.type,
+  });
+
 // Selector - A selector is a function which takes the state and return computed state
 export const getUnresolvedBugs = (state) =>
   state.entities.bugs.list.filter((bug) => !bug.resolved);

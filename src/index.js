@@ -9,6 +9,7 @@ import {
   getBugsByUser,
   loadBugs,
   addBug,
+  resolveBug,
 } from "./store/bugs";
 import { projectAdded } from "./store/projects";
 import { userAdded } from "./store/users";
@@ -77,5 +78,7 @@ setTimeout(() => {
 }, 3000);
 
 store.dispatch(addBug({ description: "a" }));
+
+store.dispatch(resolveBug(2));
 
 unsubscribe();
