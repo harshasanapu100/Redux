@@ -91,6 +91,14 @@ export const loadBugs = () => (dispatch, getState) => {
   );
 };
 
+export const addBug = (bug) =>
+  apiCallBegan({
+    url: url,
+    method: "post",
+    data: bug,
+    onSuccess: bugAdded.type,
+  });
+
 // Selector - A selector is a function which takes the state and return computed state
 export const getUnresolvedBugs = (state) =>
   state.entities.bugs.list.filter((bug) => !bug.resolved);

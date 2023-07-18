@@ -8,6 +8,7 @@ import {
   getUnresolvedBugsUsingMemoization,
   getBugsByUser,
   loadBugs,
+  addBug,
 } from "./store/bugs";
 import { projectAdded } from "./store/projects";
 import { userAdded } from "./store/users";
@@ -73,5 +74,7 @@ store.dispatch(loadBugs());
 setTimeout(() => {
   store.dispatch(loadBugs());
 }, 3000);
+
+store.dispatch(addBug({ description: "a" }));
 
 unsubscribe();
