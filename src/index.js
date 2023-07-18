@@ -7,10 +7,10 @@ import {
   getUnresolvedBugs,
   getUnresolvedBugsUsingMemoization,
   getBugsByUser,
+  loadBugs,
 } from "./store/bugs";
 import { projectAdded } from "./store/projects";
 import { userAdded } from "./store/users";
-import { apiCallBegan, apiCallFailed, apiCallSuccess } from "./store/api";
 
 const store = configureStore();
 
@@ -54,7 +54,7 @@ store.dispatch((dispatch, getState) => {
   // Call  an API endpoint
 
   // When the promise is resolved => dispatch(res of api call)
-  dispatch({ type: "bugsReceived", paylod: { bugs: [1, 2, 3] } });
+  dispatch({ type: "bugsReceivedTemp", paylod: { bugs: [1, 2, 3] } });
 
   // If the promise is rejected => dispatch(error)
 });
@@ -68,12 +68,6 @@ store.dispatch({
 
 // Calling backend API
 
-store.dispatch(
-  apiCallBegan({
-    url: "/bugs",
-    onSuccess: "bugsReceived",
-    onError: apiCallFailed.type,
-  })
-);
+store.dispatch(loadBugs());
 
 unsubscribe();

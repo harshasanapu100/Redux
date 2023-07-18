@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { createSelector } from "reselect";
+import { apiCallBegan, apiCallFailed } from "./api";
 
 // The below pattern implemented using Ducks patteren. Points to remember in Ducks pattern
 // 1) Move Action types, Action creators and Reducer into this single module.
@@ -42,12 +43,31 @@ const slice = createSlice({
       const index = bugs.list.findIndex((bug) => bug.id === bugId);
       bugs.list[index].userId = userId;
     },
+
+    bugsReceived: (bugs, action) => {
+      bugs.list = action.payload;
+    },
   },
 });
 
-export const { bugAdded, bugRemoved, bugResloved, bugAssignedToUser } =
-  slice.actions;
+export const {
+  bugAdded,
+  bugRemoved,
+  bugResloved,
+  bugAssignedToUser,
+  bugsReceived,
+} = slice.actions;
 export default slice.reducer;
+
+// Action creators
+const url = "bugs";
+export const loadBugs = () =>
+  apiCallBegan({
+    url: url,
+    method: "get",
+    onSuccess: bugsReceived.type,
+    onError: apiCallFailed.type,
+  });
 
 // Selector - A selector is a function which takes the state and return computed state
 export const getUnresolvedBugs = (state) =>
