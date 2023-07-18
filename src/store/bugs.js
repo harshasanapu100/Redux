@@ -46,6 +46,14 @@ const slice = createSlice({
 
     bugsReceived: (bugs, action) => {
       bugs.list = action.payload;
+      bugs.loading = false;
+    },
+
+    bugsRequested: (bugs, action) => {
+      bugs.loading = true;
+    },
+    bugsRequestFailed: (bugs, action) => {
+      bugs.loading = false;
     },
   },
 });
@@ -56,6 +64,8 @@ export const {
   bugResloved,
   bugAssignedToUser,
   bugsReceived,
+  bugsRequested,
+  bugsRequestFailed,
 } = slice.actions;
 export default slice.reducer;
 
@@ -65,8 +75,9 @@ export const loadBugs = () =>
   apiCallBegan({
     url: url,
     method: "get",
+    onStart: bugsRequested.type,
     onSuccess: bugsReceived.type,
-    onError: apiCallFailed.type,
+    onError: bugsRequestFailed.type,
   });
 
 // Selector - A selector is a function which takes the state and return computed state
