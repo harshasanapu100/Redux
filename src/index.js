@@ -27,12 +27,12 @@ store.dispatch(userAdded({ name: "User2" }));
 store.dispatch(projectAdded({ name: "Project 1" }));
 
 // Bugs dispatchers
-store.dispatch(bugAdded({ description: "Bug1" }));
-store.dispatch(bugAdded({ description: "Bug2" }));
-store.dispatch(bugAdded({ description: "Bug3" }));
-store.dispatch(bugResloved({ id: 1 }));
-store.dispatch(bugRemoved({ id: 1 }));
-store.dispatch(bugAssignedToUser({ bugId: 2, userId: 1 }));
+//store.dispatch(bugAdded({ description: "Bug1" }));
+//store.dispatch(bugAdded({ description: "Bug2" }));
+//store.dispatch(bugAdded({ description: "Bug3" }));
+//store.dispatch(bugResloved({ id: 1 }));
+//store.dispatch(bugRemoved({ id: 1 }));
+//store.dispatch(bugAssignedToUser({ bugId: 2, userId: 1 }));
 
 // Selectors
 const unresolvedBugs1 = getUnresolvedBugs(store.getState());
@@ -71,6 +71,7 @@ store.dispatch({
 
 store.dispatch(loadBugs());
 
+// Caching the loadBugs
 setTimeout(() => {
   store.dispatch(loadBugs());
 }, 3000);

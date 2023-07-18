@@ -7,8 +7,6 @@ import moment from "moment";
 // 1) Move Action types, Action creators and Reducer into this single module.
 // 1) Reducer has to be default export in this module.
 
-let lastId = 0;
-
 // crateSlice combines the createAction & createReducer and automatically creates
 // actions and reducer for us
 const slice = createSlice({
@@ -22,11 +20,7 @@ const slice = createSlice({
     // actions => actions handlers
 
     bugAdded: (bugs, action) => {
-      bugs.list.push({
-        id: ++lastId,
-        description: action.payload.description,
-        resolved: false,
-      });
+      bugs.list.push(action.payload);
     },
 
     bugRemoved: (bugs, action) => {
