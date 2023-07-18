@@ -70,4 +70,8 @@ store.dispatch({
 
 store.dispatch(loadBugs());
 
+setTimeout(() => {
+  store.dispatch(loadBugs());
+}, 3000);
+
 unsubscribe();

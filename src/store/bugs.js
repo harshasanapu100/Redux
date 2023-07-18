@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { createSelector } from "reselect";
 import { apiCallBegan, apiCallFailed } from "./api";
+import moment from "moment";
 
 // The below pattern implemented using Ducks patteren. Points to remember in Ducks pattern
 // 1) Move Action types, Action creators and Reducer into this single module.
@@ -47,6 +48,7 @@ const slice = createSlice({
     bugsReceived: (bugs, action) => {
       bugs.list = action.payload;
       bugs.loading = false;
+      bugs.lastFetch = Date.now();
     },
 
     bugsRequested: (bugs, action) => {
@@ -71,14 +73,23 @@ export default slice.reducer;
 
 // Action creators
 const url = "bugs";
-export const loadBugs = () =>
-  apiCallBegan({
-    url: url,
-    method: "get",
-    onStart: bugsRequested.type,
-    onSuccess: bugsReceived.type,
-    onError: bugsRequestFailed.type,
-  });
+
+export const loadBugs = () => (dispatch, getState) => {
+  const { lastFetch } = getState().entities.bugs;
+  const diffInMinutes = moment().diff(moment(lastFetch), "minutes");
+
+  if (diffInMinutes < 10) return;
+
+  dispatch(
+    apiCallBegan({
+      url: url,
+      method: "get",
+      onStart: bugsRequested.type,
+      onSuccess: bugsReceived.type,
+      onError: bugsRequestFailed.type,
+    })
+  );
+};
 
 // Selector - A selector is a function which takes the state and return computed state
 export const getUnresolvedBugs = (state) =>
